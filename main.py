@@ -19,12 +19,30 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+class Player(GameSprite):
+    def update1(self):
+        keys = key.get_pressed()
+        if keys[K_w] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys[K_s] and self.rect.y < win_width :
+            self.rect.y += self.speed
 
+    def update2(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < win_width :
+            self.rect.y += self.speed
 
 background_color = (150, 255, 255)
 win_width = 600
 win_height = 500
 window = display.set_mode((win_width, win_height))
+
+img_rocket = 'images/racket.png'
+
+rocket1 = Player(img_rocket, 10, 200, 50, 200, 5)
+rocket2 = Player(img_rocket, win_width - 60, 200, 50, 200, 5)
 
 clock = time.Clock()
 FPS = 60
@@ -40,6 +58,12 @@ while run:
     
     if not finish:
         window.fill(background_color)
+
+        rocket1.update1()
+        rocket2.update2()
+
+        rocket1.reset()
+        rocket2.reset()
 
         display.update()
         clock.tick(FPS)
