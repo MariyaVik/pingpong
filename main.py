@@ -52,6 +52,11 @@ speed_ball_y = 3
 clock = time.Clock()
 FPS = 60
 
+font.init()
+font = font.Font('fonts/15310.otf', 40)
+text_lose_1 = font.render('Игрок 1 проиграл', 1, (255, 0, 0))
+text_lose_2 = font.render('Игрок 2 проиграл', 1, (255, 0, 0))
+
 #основной цикл
 finish = False
 run = True 
@@ -74,6 +79,14 @@ while run:
 
         if sprite.collide_rect(ball, rocket1) or sprite.collide_rect(ball, rocket2):
             speed_ball_x *= -1
+
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(text_lose_1, (200, 200))
+
+        if ball.rect.x > win_width - 50:
+            finish = True
+            window.blit(text_lose_2, (200, 200))
 
         rocket1.reset()
         rocket2.reset()
