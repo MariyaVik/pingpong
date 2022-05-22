@@ -46,6 +46,9 @@ rocket1 = Player(img_rocket, 10, 200, 50, 200, 5)
 rocket2 = Player(img_rocket, win_width - 60, 200, 50, 200, 5)
 ball = GameSprite(img_ball, 200, 200, 50, 50, 2)
 
+speed_ball_x = 3
+speed_ball_y = 3
+
 clock = time.Clock()
 FPS = 60
 
@@ -63,6 +66,14 @@ while run:
 
         rocket1.update1()
         rocket2.update2()
+        ball.rect.x += speed_ball_x
+        ball.rect.y += speed_ball_y
+
+        if ball.rect.y > win_height - 50 or ball.rect.y < 0:
+           speed_ball_y *= -1
+
+        if sprite.collide_rect(ball, rocket1) or sprite.collide_rect(ball, rocket2):
+            speed_ball_x *= -1
 
         rocket1.reset()
         rocket2.reset()
